@@ -6,8 +6,8 @@
     <string name="homeTitleText">FluentU\nLearning</string>
     <string name="activitiesSectionText">Activities</string>
     <string name="dailyTipsSectionText">Daily Tips</string>
-    <string name="QuizButtonText">Quiz</string>
-    <string name="FlashCardButtonText">FlashCard</string>
+    <string name="QuizButtonText">Quizzes</string>
+    <string name="FlashCardButtonText">FlashCards</string>
     <string name="ProgressButtonText">Progress</string>
     <string name="ResourcesButtonText">Resources</string>
     <string name="dailyTipText">
@@ -39,6 +39,15 @@
     <string name="progressActivityLabel">Progress</string>
     <string name="quizActivityLabel">Quiz</string>
     <string name="resourcesActivityLabel">Resources</string>
+    <string name="resourcesString">
+        English is a fascinating language with a rich history and diverse influences.
+        Did you know that it has more words than any other language in the world?
+        The Oxford English Dictionary lists over 170,000 words currently in use, and that number is constantly growing.
+        English is also a language of borrowed words, absorbing vocabulary from various sources.
+        Roughly 70% of English words have Latin or Greek origins, while others come from languages like French, German, and even Arabic.
+        Interestingly, the word set has the highest number of different meanings, making it one of the most versatile terms in the English language.
+        Additionally, English doesn\'t have an official governing body, unlike some languages, which means it evolves organically through common usage.
+    </string>
 
 
 </resources>
