@@ -36,6 +36,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packagingOptions {
+        // Exclude the INDEX.LIST file to prevent the merge conflict
+        exclude("META-INF/INDEX.LIST")
+        exclude("META-INF/DEPENDENCIES")
+        // If there are more duplicate files, you can exclude them similarly
+    }
 }
 
 dependencies {
@@ -52,4 +59,5 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("com.google.cloud:google-cloud-translate:2.0.0")
 }
