@@ -9,13 +9,13 @@
         android:title="Language Settings"
         app:iconSpaceReserved="false">
 
-        <MultiSelectListPreference
-            android:defaultValue="@android:array/emailAddressTypes"
-            android:entries="@android:array/emailAddressTypes"
-            android:entryValues="@android:array/imProtocols"
-            android:key="multi_select_list_preference_1"
+        <ListPreference
+            android:defaultValue="en"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values"
+            android:key="list_preference_1"
             android:title="Language"
-            android:summary = "Select preferred Language"/>
+            android:summary="Select preferred language" />
     </PreferenceCategory>
 
     <PreferenceCategory
