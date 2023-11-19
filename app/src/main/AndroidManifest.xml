@@ -22,6 +22,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".FlashCardActivity"
+            android:exported="true"
+            android:label="@string/flashcardActivityLabel">
+        </activity>
+
+        <activity
+            android:name=".ProgressActivity"
+            android:exported="true"
+            android:label="@string/progressActivityLabel">
+        </activity>
+
+        <activity
+            android:name=".QuizActivity"
+            android:exported="true"
+            android:label="@string/quizActivityLabel">
+        </activity>
+
+        <activity
+            android:name=".ResourcesActivity"
+            android:exported="true"
+            android:label="@string/resourcesActivityLabel" />
     </application>
 
 </manifest>

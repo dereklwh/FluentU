@@ -1,15 +1,20 @@
 package com.example.group26
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.group26.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var imageButtons: Array<ImageButton>
 
     private lateinit var binding: ActivityMainBinding
 
@@ -18,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupButtons()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -29,5 +36,34 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+
+    fun setupButtons(){
+        imageButtons = arrayOf(
+            findViewById(R.id.quizButton),
+            findViewById(R.id.flashCardButton),
+            findViewById(R.id.progressButton),
+            findViewById(R.id.resourcesButton)
+        )
+
+        for(btn in imageButtons){
+            btn.setOnClickListener(){
+                val intent:Intent;
+                if(btn == imageButtons[0]){
+                    intent = Intent(this, QuizActivity::class.java)
+                }
+                else if(btn == imageButtons[1]){
+                    intent = Intent(this, FlashCardActivity::class.java)
+                }
+                else if(btn == imageButtons[2]){
+                    intent = Intent(this, ProgressActivity::class.java)
+                }
+                else{
+                    intent = Intent(this, ResourcesActivity::class.java)
+                }
+                startActivity(intent)
+            }
+        }
     }
 }

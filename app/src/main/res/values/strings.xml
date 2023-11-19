@@ -35,6 +35,10 @@
     <string name="PhotoTextViewString">Profile Photo:</string>
     <string name="changePhotoButtonString">CHANGE</string>
     <string name="aboutUsText">Learn more about our app and what we have to offer!</string>
+    <string name="flashcardActivityLabel">FlashCards</string>
+    <string name="progressActivityLabel">Progress</string>
+    <string name="quizActivityLabel">Quiz</string>
+    <string name="resourcesActivityLabel">Resources</string>
 
 
 </resources>
