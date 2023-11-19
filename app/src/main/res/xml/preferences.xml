@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Language Settings"
+        app:iconSpaceReserved="false">
+
+        <MultiSelectListPreference
+            android:defaultValue="@android:array/emailAddressTypes"
+            android:entries="@android:array/emailAddressTypes"
+            android:entryValues="@android:array/imProtocols"
+            android:key="multi_select_list_preference_1"
+            android:title="Language"
+            android:summary = "Select preferred Language"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Notifications"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:title="Push Notifications" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="About Us"
+        app:iconSpaceReserved="false"
+        android:summary="@string/aboutUsText">
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
