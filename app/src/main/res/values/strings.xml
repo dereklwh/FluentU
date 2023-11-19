@@ -1,6 +1,39 @@
 <resources>
     <string name="app_name">Group26</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_settings">Settings</string>
+    <string name="homeTitleText">FluentU\nLearning</string>
+    <string name="activitiesSectionText">Activities</string>
+    <string name="dailyTipsSectionText">Daily Tips</string>
+    <string name="QuizButtonText">Quiz</string>
+    <string name="FlashCardButtonText">FlashCard</string>
+    <string name="ProgressButtonText">Progress</string>
+    <string name="ResourcesButtonText">Resources</string>
+    <string name="dailyTipText">
+        Immerse yourself in English media such as movies, TV shows, podcasts, and books.
+        This not only exposes you to authentic language use but also helps improve your
+        listening skills, pronunciation, and overall comprehension.
+    </string>
+
+    <string name="nameHint">Your Name</string>
+    <string name="nameTextViewString">Name</string>
+    <string name="emailTextViewString">Email</string>
+    <string name="emailHint">Your Email</string>
+    <string name="phoneTextViewString">Phone</string>
+    <string name="phoneHint">Your Phone Number</string>
+    <string name="maleTextView">Male</string>
+    <string name="femaleTextView">Female</string>
+    <string name="classTextViewString">Class</string>
+    <string name="classHint">Enter your class, eg. 2015</string>
+    <string name="majorTextViewString">Major</string>
+    <string name="majorHint">Your Major</string>
+    <string name="genderTextViewString">Gender</string>
+    <string name="saveButtonString">Save</string>
+    <string name="closeButtonString">Close</string>
+    <string name="menuSettingString">Settings</string>
+    <string name="PhotoTextViewString">Profile Photo:</string>
+    <string name="changePhotoButtonString">CHANGE</string>
+
+
 </resources>

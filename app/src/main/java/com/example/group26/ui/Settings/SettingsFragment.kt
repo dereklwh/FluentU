@@ -1,4 +1,4 @@
-package com.example.group26.ui.home
+package com.example.group26.ui.Settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.group26.databinding.FragmentHomeBinding
+import com.example.group26.databinding.FragmentSettingsBinding
 
-class HomeFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentSettingsBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,11 +21,9 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        val settingsViewModel =
+            ViewModelProvider(this).get(SettingsViewModel::class.java)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
