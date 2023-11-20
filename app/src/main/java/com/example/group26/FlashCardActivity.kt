@@ -1,6 +1,7 @@
 package com.example.group26
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.cloud.translate.Translate
@@ -15,15 +16,20 @@ class FlashCardActivity: AppCompatActivity() {
 
     private lateinit var flashcard2: TextView
     private val api: String = "AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A"
-
+    private lateinit var flashcardButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flashcards)
 
         flashcard2 = findViewById(R.id.flashcard2)
         val flashcardText = flashcard2.text.toString()
-
+        flashcardButton = findViewById(R.id.flashCardButton)
         val targetLang = "ar"
+
+        flashcardButton.setOnClickListener {
+            finish()
+        }
+
 
         CoroutineScope(Dispatchers.IO).launch {
             val translatedText = translateText(flashcardText, targetLang)
