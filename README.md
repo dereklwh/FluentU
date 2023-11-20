@@ -7,7 +7,7 @@ Welcome to an innovative approach to mastering new languages. 'FluentU' is not j
 [![Project Pitch Video](https://img.youtube.com/vi/UwDVhpc0Pis/0.jpg)](https://youtu.be/UwDVhpc0Pis)
 
 ## Show and Tell 1
-[![Show and Tell 1 Video](https://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)](#) <!-- Replace "#" with the actual URL once completed -->
+[![Show and Tell 1 Video](https://img.youtube.com/vi/kLSDVlyxACQ/0.jpg)](https://www.youtube.com/watch?v=kLSDVlyxACQ) <!-- Replace "#" with the actual URL once completed -->
 
 ## Credits
 - Derek Huang, [dlh10@sfu.ca](mailto:dlh10@sfu.ca)
