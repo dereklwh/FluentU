@@ -12,5 +12,5 @@ Welcome to an innovative approach to mastering new languages. 'FluentU' is not j
 ## Credits
 - Derek Huang, [dlh10@sfu.ca](mailto:dlh10@sfu.ca)
 - Carson Lin, [cla418@sfu.ca](mailto:cla418@sfu.ca)
-- Andrew <!-- Add Andrew's details if available -->
+- Andrew, [ana74@sfu.ca](mailto:ana75@sfu.ca)
 - Brian Hau, [bhau@sfu.ca](mailto:bhau@sfu.ca)
