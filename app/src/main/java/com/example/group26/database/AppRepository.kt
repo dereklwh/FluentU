@@ -9,7 +9,6 @@ class AppRepository(
 ) {
     // For Quiz
     val allQuizzes: LiveData<List<QuizData>> = quizDao.getAllQuizzes()
-
     fun insert(quizData: QuizData) {
         quizDao.insert(quizData)
     }

@@ -8,6 +8,5 @@ import java.util.Calendar
 data class QuizData(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val question: String,
-    val multipleChoice: List<String>,
-    val timeTaken: Double,
+    val multipleChoice: List<String>
 )

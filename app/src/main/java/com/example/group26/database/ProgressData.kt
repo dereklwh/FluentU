@@ -10,5 +10,6 @@ data class ProgressData(
     val quizId: Long,
     val score: Int,
     val attempts: Int,
-    val quizType: String
+    val quizType: String,
+    val timeTaken: Double,
 )
