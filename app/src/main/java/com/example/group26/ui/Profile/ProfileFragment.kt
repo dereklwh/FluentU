@@ -1,18 +1,42 @@
 package com.example.group26.ui.Profile
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.group26.R
 import com.example.group26.databinding.FragmentProfileBinding
+import java.io.File
+import androidx.core.content.FileProvider
+
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+
+    private lateinit var tempImgUri: Uri
+    private lateinit var myViewModel: ProfileViewModel
+    private lateinit var cameraResult: ActivityResultLauncher<Intent>
+    private val tempImgFileName = "xd_temp_img.jpg"
+    private val PREFS_NAME = "MyPrefs"
+    private lateinit var prefs: SharedPreferences
+    private val FLAG_KEY = "flag"
+    private var flag = false
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,15 +46,55 @@ class ProfileFragment : Fragment() {
         val profileViewModel =
             ViewModelProvider(this).get(ProfileViewModel::class.java)
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        flag = prefs.getBoolean(FLAG_KEY, false)
+        val imageProfile = binding.imageProfile
 
-	    val closeButton = binding.closeButton
-	    closeButton.setOnClickListener {
+        Util.checkPermissions(this)
+
+        val tempImgFile = File(requireContext().getExternalFilesDir(null), tempImgFileName)
+        tempImgUri = FileProvider.getUriForFile(requireContext(), "com.example.group26", tempImgFile)
+
+        val changePhotoButton = binding.ChangePhotoButton
+        changePhotoButton.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri)
+            cameraResult.launch(intent)
+        }
+
+
+        val closeButton = binding.closeButton
+        closeButton.setOnClickListener {
+            flag = false
+            val prefsEditor = prefs.edit()
+            prefsEditor.putBoolean(FLAG_KEY, flag)
+            prefsEditor.apply()
+            Toast.makeText(requireContext(), "Photo removed", Toast.LENGTH_SHORT).show()
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+
 
         val saveButton = binding.saveButton
         saveButton.setOnClickListener {
             saveProfileData(profileViewModel)
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        cameraResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val bitmap = Util.getBitmap(this, tempImgUri)
+                myViewModel.userImage.value = bitmap
+            }
+        }
+
+        myViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        myViewModel.userImage.observe(viewLifecycleOwner, { it ->
+            imageProfile.setImageBitmap(it)
+        })
+        if (tempImgFile.exists() && flag == true) {
+            flag = true
+            val bitmap = Util.getBitmap(this, tempImgUri)
+            imageProfile.setImageBitmap(bitmap)
         }
 
         val savedProfileData = profileViewModel.getSavedProfileData()
@@ -62,6 +126,11 @@ class ProfileFragment : Fragment() {
             else -> ""
         }
         profileViewModel.saveProfileData(name, email, phone, gender)
+
+        flag = true
+        val prefsEditor = prefs.edit()
+        prefsEditor.putBoolean(FLAG_KEY, flag)
+        prefsEditor.apply()
         Toast.makeText(requireContext(), "Profile saved", Toast.LENGTH_SHORT).show()
     }
     override fun onDestroyView() {

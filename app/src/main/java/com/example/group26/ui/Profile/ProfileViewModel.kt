@@ -2,6 +2,7 @@ package com.example.group26.ui.Profile
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +10,7 @@ import androidx.lifecycle.ViewModel
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
     private val sharedPreferences = application.getSharedPreferences("ProfilePreferences", Context.MODE_PRIVATE)
-
+    val userImage = MutableLiveData<Bitmap>()
     fun saveProfileData(name: String, email: String, phone: String, gender: String) {
         sharedPreferences.edit().apply {
             putString("NAME", name)
