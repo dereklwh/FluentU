@@ -198,10 +198,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
 		    android:text="Remove Photo"
-		    <!--
-                    android:text="@string/closeButtonString"
-		    -->
                     android:textColor="#00796B" />
+		<!--android:text="@string/closeButtonString" -->
             </LinearLayout>
 
         </LinearLayout>
