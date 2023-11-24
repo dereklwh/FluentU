@@ -13,9 +13,17 @@
             android:defaultValue="en"
             android:entries="@array/language_entries"
             android:entryValues="@array/language_values"
-            android:key="list_preference_1"
+            android:key="language_preference"
             android:title="Language"
             android:summary="Select preferred language" />
+
+        <ListPreference
+            android:defaultValue="en"
+            android:entries="@array/proficiency_entries"
+            android:entryValues="@array/proficiency_values"
+            android:key="proficiency_level"
+            android:title="Proficiency"
+            android:summary="Please select your skill level" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -30,14 +38,18 @@
             android:defaultValue="false"
             android:title="Push Notifications" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="About Us"
-        app:iconSpaceReserved="false"
-        android:summary="@string/aboutUsText">
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="about_us_preference"
+            android:summary="@string/aboutUsText"
+            android:onClick="openAboutUs"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
-
-
 </PreferenceScreen>
