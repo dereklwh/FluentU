@@ -2,6 +2,8 @@ package com.example.group26.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -19,12 +21,13 @@ class QuizViewModel(application: Application, private val repository: AppReposit
     }
     init {
         insertQuiz(QuizData(question = "What is the translation for 'Book'?",
-            multipleChoice = listOf("Dance", "Read", "Book", "Library")))
+            multipleChoice = listOf("Dance", "Read", "Book", "Library"), correctAnswer = "Book"))
         insertQuiz(QuizData(question = "What is the translation for 'Apple'?",
-            multipleChoice = listOf("Watermelon", "Apple", "Pear", "Orange")))
+            multipleChoice = listOf("Watermelon", "Apple", "Pear", "Orange"), correctAnswer = "Apple"))
         insertQuiz(QuizData(question = "What is the translation for 'Water'?",
-            multipleChoice = listOf("Water", "Fire", "Stone", "Drink")))
+            multipleChoice = listOf("Water", "Fire", "Stone", "Drink"), correctAnswer = "Water"))
     }
+
 }
 
 class QuizViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
