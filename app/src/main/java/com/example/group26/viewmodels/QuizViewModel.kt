@@ -18,10 +18,12 @@ class QuizViewModel(application: Application, private val repository: AppReposit
         repository.insert(quizData)
     }
     init {
-        insertQuiz(QuizData(question = "What is the capital of France?",
-            multipleChoice = listOf("Paris", "London", "Berlin", "Madrid")))
-        insertQuiz(QuizData(question = "What is french translation for Egg?",
-            multipleChoice = listOf("ouef", "oof", "olaf", "fromage")))
+        insertQuiz(QuizData(question = "What is the translation for 'Book'?",
+            multipleChoice = listOf("Dance", "Read", "Book", "Library")))
+        insertQuiz(QuizData(question = "What is the translation for 'Apple'?",
+            multipleChoice = listOf("Watermelon", "Apple", "Pear", "Orange")))
+        insertQuiz(QuizData(question = "What is the translation for 'Water'?",
+            multipleChoice = listOf("Water", "Fire", "Stone", "Drink")))
     }
 }
 
