@@ -1,6 +1,7 @@
 package com.example.group26
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.example.group26.database.AppDatabase
 import com.example.group26.database.QuizData
 import com.example.group26.viewmodels.QuizViewModel
@@ -29,12 +31,16 @@ class QuizActivity : AppCompatActivity() {
     private val translator = Translator("AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A")
     private val originalToTranslatedMap = mutableMapOf<String, String>() //keep track of translations
     private var currentQuizzes: List<QuizData> = emptyList()
+    private lateinit var language:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
         submitButton = findViewById(R.id.submitButton)
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        language = sharedPreferences.getString("language_preference", "en") ?: "en"
 
         // Initialize the ViewModel
         val factory = QuizViewModelFactory(this.application)
@@ -75,7 +81,7 @@ class QuizActivity : AppCompatActivity() {
     private fun translateAndSetOptions(options: List<String>, radioGroupId: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             val translatedOptions = options.map { option ->
-                val translatedText = translator.translateText(option, "zh-CN") // depends on the language they choose in sharedpreferrences
+                val translatedText = translator.translateText(option, language) // depends on the language they choose in sharedpreferrences
                 originalToTranslatedMap[option] = translatedText
                 translatedText
             }
