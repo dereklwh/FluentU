@@ -35,7 +35,8 @@
         <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="false"
+            android:defaultValue="true"
+            android:key = "push_notification"
             android:title="Push Notifications" />
     </PreferenceCategory>
 

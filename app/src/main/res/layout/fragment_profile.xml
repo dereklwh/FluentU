@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-
-    >
+    android:orientation="horizontal">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,7 +35,7 @@
 
                 <ImageView
                     android:id="@+id/imageProfile"
-                    android:layout_width="262dp"
+                    android:layout_width="221dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
                     app:srcCompat="@android:drawable/btn_star_big_on" />
@@ -185,8 +183,9 @@
                 <Button
                     android:id="@+id/saveButton"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="center"
                     android:text="@string/saveButtonString"
                     android:textColor="#00796B" />
@@ -194,12 +193,12 @@
                 <Button
                     android:id="@+id/closeButton"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="188dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="center"
-		    android:text="Remove Photo"
+                    android:text="@string/closeButtonString"
                     android:textColor="#00796B" />
-		<!--android:text="@string/closeButtonString" -->
             </LinearLayout>
 
         </LinearLayout>

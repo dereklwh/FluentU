@@ -40,14 +40,16 @@
     <string name="quizActivityLabel">Quiz</string>
     <string name="resourcesActivityLabel">Resources</string>
     <string name="resourcesString">
-        English is a fascinating language with a rich history and diverse influences.
-        Did you know that it has more words than any other language in the world?
-        The Oxford English Dictionary lists over 170,000 words currently in use, and that number is constantly growing.
-        English is also a language of borrowed words, absorbing vocabulary from various sources.
-        Roughly 70% of English words have Latin or Greek origins, while others come from languages like French, German, and even Arabic.
-        Interestingly, the word set has the highest number of different meanings, making it one of the most versatile terms in the English language.
-        Additionally, English doesn\'t have an official governing body, unlike some languages, which means it evolves organically through common usage.
+        Welcome to an innovative approach to mastering new languages.
+        FluentU is not just an application; it\'s a revolution that puts the power of language
+        learning directly into the pockets of eager students worldwide. With us, language barriers
+        are transformed into bridges of communication. We\'re from Group 26, and we\'re excited to guide
+        you through our solution.
     </string>
-
-
+    <string name="aboutTitleString">About</string>
+    <string name="github_link">Visit our GitHub page to learn more: <a href="https://github.com/dereklwh/FluentU">https://github.com/dereklwh/FluentU</a></string>
+    <string name="etcTitleString">ETC</string>
+    <string name="etcText">*DISCLAIMER* The app is under development not all have been implemented</string>
+    <string name="resourceReturnBtn">return</string>
+    <string name="resourcesTitleText">Resources</string>
 </resources>

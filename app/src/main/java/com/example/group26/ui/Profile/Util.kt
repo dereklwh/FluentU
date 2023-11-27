@@ -1,6 +1,7 @@
 package com.example.group26.ui.Profile
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,6 +10,8 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.io.File
+import java.io.FileOutputStream
 
 object Util {
     fun checkPermissions(fragment: ProfileFragment) {
@@ -38,5 +41,20 @@ object Util {
         matrix.setRotate(90f)
         var ret = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         return ret
+    }
+
+    fun saveBitmapToFile(fragment: ProfileFragment, fileName: String, fileUri: Uri, rotation: Float) {
+        val context = fragment.requireContext()
+        val tempImgFile = File(context.getExternalFilesDir(null), fileName)
+
+        FileOutputStream(tempImgFile).use { output ->
+            getBitmap(fragment, fileUri).let { bitmap ->
+                Matrix().apply { setRotate(rotation) }
+                    .let { matrix ->
+                        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+                    }
+                    .compress(Bitmap.CompressFormat.JPEG, 100, output)
+            }
+        }
     }
 }

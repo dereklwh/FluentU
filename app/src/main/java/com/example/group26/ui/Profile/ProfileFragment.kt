@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +31,16 @@ class ProfileFragment : Fragment() {
     private lateinit var tempImgUri: Uri
     private lateinit var myViewModel: ProfileViewModel
     private lateinit var cameraResult: ActivityResultLauncher<Intent>
-    private val tempImgFileName = "xd_temp_img.jpg"
+
+    private lateinit var galleryResult: ActivityResultLauncher<Intent>
+
+    private val tempImgFileName = "temp_img.jpg"
     private val PREFS_NAME = "MyPrefs"
     private lateinit var prefs: SharedPreferences
     private val FLAG_KEY = "flag"
     private var flag = false
+
+    private var selectedPhotoUri: Uri? = null
 
 
 
@@ -57,31 +63,36 @@ class ProfileFragment : Fragment() {
 
         val changePhotoButton = binding.ChangePhotoButton
         changePhotoButton.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri)
-            cameraResult.launch(intent)
+            showImageSourceDialog()
         }
-
 
         val closeButton = binding.closeButton
         closeButton.setOnClickListener {
-            flag = false
-            val prefsEditor = prefs.edit()
-            prefsEditor.putBoolean(FLAG_KEY, flag)
-            prefsEditor.apply()
-            Toast.makeText(requireContext(), "Photo removed", Toast.LENGTH_SHORT).show()
             requireActivity().supportFragmentManager.popBackStack()
         }
-
-
 
         val saveButton = binding.saveButton
         saveButton.setOnClickListener {
+
+            if (selectedPhotoUri != null) {
+                val bitmap = Util.getBitmap(this, selectedPhotoUri!!)
+                myViewModel.userImage.value = bitmap
+            }
+
             saveProfileData(profileViewModel)
-            requireActivity().supportFragmentManager.popBackStack()
         }
         cameraResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
+                val bitmap = Util.getBitmap(this, tempImgUri)
+                myViewModel.userImage.value = bitmap
+            }
+        }
+
+        galleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                val imgUri = intent?.data!!
+                Util.saveBitmapToFile(this, tempImgFileName, imgUri, -90f)
                 val bitmap = Util.getBitmap(this, tempImgUri)
                 myViewModel.userImage.value = bitmap
             }
@@ -132,6 +143,34 @@ class ProfileFragment : Fragment() {
         prefsEditor.putBoolean(FLAG_KEY, flag)
         prefsEditor.apply()
         Toast.makeText(requireContext(), "Profile saved", Toast.LENGTH_SHORT).show()
+    }
+
+    // added getContent, showImageSourceDialog, onCameraSelected, onGallerySelected
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            uri: Uri? -> Log.d("UserProfile", "Gallery selected")
+        if (uri != null) {
+            selectedPhotoUri = uri
+            val bitmap = Util.getBitmap(this, uri)
+            myViewModel.userImage.value = bitmap
+        }
+    }
+
+    private fun showImageSourceDialog() {
+        val dialogFragment = ImageSourceDialog(this)
+        dialogFragment.show(requireActivity().supportFragmentManager, "ImageSourceDialog")
+    }
+
+    fun onCameraSelected() {
+        if (tempImgUri != null && cameraResult != null) {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri)
+            cameraResult.launch(intent)
+        }
+    }
+
+    fun onGallerySelected() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryResult.launch(intent)
     }
     override fun onDestroyView() {
         super.onDestroyView()
