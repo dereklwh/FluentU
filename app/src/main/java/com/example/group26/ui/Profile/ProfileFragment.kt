@@ -31,7 +31,10 @@ class ProfileFragment : Fragment() {
     private lateinit var tempImgUri: Uri
     private lateinit var myViewModel: ProfileViewModel
     private lateinit var cameraResult: ActivityResultLauncher<Intent>
-    private val tempImgFileName = "xd_temp_img.jpg"
+
+    private lateinit var galleryResult: ActivityResultLauncher<Intent>
+
+    private val tempImgFileName = "temp_img.jpg"
     private val PREFS_NAME = "MyPrefs"
     private lateinit var prefs: SharedPreferences
     private val FLAG_KEY = "flag"
@@ -93,6 +96,16 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        galleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                val imgUri = intent?.data!!
+                Util.saveBitmapToFile(this, tempImgFileName, imgUri, -90f)
+                val bitmap = Util.getBitmap(this, tempImgUri)
+                myViewModel.userImage.value = bitmap
+            }
+        }
+
         myViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         myViewModel.userImage.observe(viewLifecycleOwner, { it ->
             imageProfile.setImageBitmap(it)
@@ -139,7 +152,7 @@ class ProfileFragment : Fragment() {
         prefsEditor.apply()
         Toast.makeText(requireContext(), "Profile saved", Toast.LENGTH_SHORT).show()
     }
-    
+
     // added getContent, showImageSourceDialog, onCameraSelected, onGallerySelected
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri: Uri? -> Log.d("UserProfile", "Gallery selected")
@@ -164,7 +177,8 @@ class ProfileFragment : Fragment() {
     }
 
     fun onGallerySelected() {
-        getContent.launch("image/*")
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryResult.launch(intent)
     }
     override fun onDestroyView() {
         super.onDestroyView()
