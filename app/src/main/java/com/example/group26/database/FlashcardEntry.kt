@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class FlashcardEntry(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val englishPhrase: String,
-    val frenchPhrase: String? = null,
-    val spanishPhrase: String? = null,
-    val chinesePhrase: String? = null
+    val frenchPhrase: String,
+    val spanishPhrase: String,
+    val chinesePhrase: String
     )

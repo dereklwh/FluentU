@@ -19,6 +19,9 @@ class AppRepository(
     fun insert(flashcardEntry: FlashcardEntry) {
         flashcardDao.insert(flashcardEntry)
     }
+    fun delete(flashcardEntry: FlashcardEntry){
+        flashcardDao.deleteFlashCard(flashcardEntry)
+    }
 
 
     // For ProgressTracker
