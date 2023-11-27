@@ -19,13 +19,13 @@ class QuizViewModel(application: Application, private val repository: AppReposit
     fun insertQuiz(quizData: QuizData) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(quizData)
     }
-    init {
-        insertQuiz(QuizData(question = "What is the translation for 'Book'?",
-            multipleChoice = listOf("Dance", "Read", "Book", "Library"), correctAnswer = "Book"))
-        insertQuiz(QuizData(question = "What is the translation for 'Apple'?",
-            multipleChoice = listOf("Watermelon", "Apple", "Pear", "Orange"), correctAnswer = "Apple"))
-        insertQuiz(QuizData(question = "What is the translation for 'Water'?",
-            multipleChoice = listOf("Water", "Fire", "Stone", "Drink"), correctAnswer = "Water"))
+
+    fun getRandomQuizzes(): LiveData<List<QuizData>> {
+        val randomQuizzes = MutableLiveData<List<QuizData>>()
+        viewModelScope.launch(Dispatchers.IO) {
+            randomQuizzes.postValue(repository.getRandomQuizzes())
+        }
+        return randomQuizzes
     }
 
 }

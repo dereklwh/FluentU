@@ -13,6 +13,10 @@ class AppRepository(
         quizDao.insert(quizData)
     }
 
+    fun getRandomQuizzes(): List<QuizData> {
+        return quizDao.getRandomQuizzes()
+    }
+
 
     // For Flashcard
     val allFlashcards: LiveData<List<FlashcardEntry>> = flashcardDao.getAllFlashcards()

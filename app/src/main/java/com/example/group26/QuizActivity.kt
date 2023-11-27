@@ -1,5 +1,6 @@
 package com.example.group26
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,8 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.group26.database.AppDatabase
+import com.example.group26.database.QuizData
 import com.example.group26.viewmodels.QuizViewModel
 import com.example.group26.viewmodels.QuizViewModelFactory
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +28,7 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private val translator = Translator("AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A")
     private val originalToTranslatedMap = mutableMapOf<String, String>() //keep track of translations
+    private var currentQuizzes: List<QuizData> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +43,6 @@ class QuizActivity : AppCompatActivity() {
         setupObservers()
 
         //TODO: RETRIEVE QUIZ SCORE AND STORE IN DATABASE
-        //
         submitButton.setOnClickListener{
             Log.d("QUIZ_SUBMIT", "Submit button clicked")
             val score = computeScore()
@@ -46,24 +51,27 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.allQuizzes.observe(this, Observer { quizzes ->
-            // Assuming we're handling two questions for simplicity
-            val question1 = quizzes.getOrNull(0)
-            val question2 = quizzes.getOrNull(1)
-
-            findViewById<TextView>(R.id.question1TextView).text = question1?.question
-            findViewById<TextView>(R.id.question2TextView).text = question2?.question
-
-            question1?.multipleChoice?.let { options ->
-                translateAndSetOptions(options, R.id.question1Options)
-            }
-
-            question2?.multipleChoice?.let { options ->
-                translateAndSetOptions(options, R.id.question2Options)
+        viewModel.getRandomQuizzes().observe(this, { quizzes ->
+            currentQuizzes = quizzes // Update the current quizzes
+            // Update the UI with the quizzes
+            quizzes.forEachIndexed { index, quiz ->
+                when (index) {
+                    0 -> updateQuizUI(quiz, R.id.question1TextView, R.id.question1Options)
+                    1 -> updateQuizUI(quiz, R.id.question2TextView, R.id.question2Options)
+                    2 -> updateQuizUI(quiz, R.id.question3TextView, R.id.question3Options)
+                    3 -> updateQuizUI(quiz, R.id.question4TextView, R.id.question4Options)
+                    4 -> updateQuizUI(quiz, R.id.question5TextView, R.id.question5Options)
+                }
             }
         })
     }
 
+    private fun updateQuizUI(quiz: QuizData, textViewId: Int, radioGroupId: Int) {
+        val questionTextView = findViewById<TextView>(textViewId)
+
+        questionTextView.text = quiz.question
+        translateAndSetOptions(quiz.multipleChoice, radioGroupId)
+    }
     private fun translateAndSetOptions(options: List<String>, radioGroupId: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             val translatedOptions = options.map { option ->
@@ -84,7 +92,9 @@ class QuizActivity : AppCompatActivity() {
         val radioGroupId = when (questionIndex) {
             0 -> R.id.question1Options
             1 -> R.id.question2Options
-            // Add more cases as needed for additional questions.
+            2 -> R.id.question3Options
+            3 -> R.id.question4Options
+            4 -> R.id.question5Options
             else -> return "" // Return an empty string if the index is out of bounds
         }
         val radioGroup = findViewById<RadioGroup?>(radioGroupId)
@@ -98,13 +108,13 @@ class QuizActivity : AppCompatActivity() {
 
     // Function to compute the quiz score
     private fun computeScore(): Int {
-        val quizzes = viewModel.allQuizzes.value ?: return 0
-        var score = 0
-        val totalQuestions = quizzes.size
+        if (currentQuizzes.isEmpty()) return 0
 
-        quizzes.forEachIndexed { index, quizData ->
+        var score = 0
+        val totalQuestions = currentQuizzes.size
+
+        currentQuizzes.forEachIndexed { index, quizData ->
             val selectedAnswerTranslated = getSelectedAnswerForQuestion(index)
-            // Reverse lookup the original English option from the translated one
             val selectedAnswerOriginal = originalToTranslatedMap.entries.find { it.value == selectedAnswerTranslated }?.key
             Log.d("SELECTED ANSWER", "$selectedAnswerOriginal and ${quizData.correctAnswer}")
             if (quizData.correctAnswer == selectedAnswerOriginal) {
@@ -112,13 +122,8 @@ class QuizActivity : AppCompatActivity() {
             }
         }
 
-        // Show the score out of the total number of questions
         Toast.makeText(this, "Your score: $score / $totalQuestions", Toast.LENGTH_LONG).show()
-
         return score
     }
-
-
-
 }
 
