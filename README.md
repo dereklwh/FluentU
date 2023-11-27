@@ -10,7 +10,7 @@ Welcome to an innovative approach to mastering new languages. 'FluentU' is not j
 [![Show and Tell 1 Video](https://img.youtube.com/vi/kLSDVlyxACQ/0.jpg)](https://www.youtube.com/watch?v=kLSDVlyxACQ) 
 
 ## Show and Tell 2
-[![Show and Tell 2 Video](https://img.youtube.com/vi/#/0.jpg)](#) 
+[![Show and Tell 2 Video](https://img.youtube.com/vi/Ev1QniKpEA0/0.jpg)](https://youtu.be/Ev1QniKpEA0) 
 
 
 
