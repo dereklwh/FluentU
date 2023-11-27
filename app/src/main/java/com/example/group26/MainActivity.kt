@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupButtons()
         scheduleNotifications()
 
         val navView: BottomNavigationView = binding.navView
@@ -47,33 +46,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    fun setupButtons(){
-        imageButtons = arrayOf(
-            findViewById(R.id.quizButton),
-            findViewById(R.id.flashCardButton),
-            findViewById(R.id.progressButton),
-            findViewById(R.id.resourcesButton)
-        )
-
-        for(btn in imageButtons){
-            btn.setOnClickListener(){
-                val intent:Intent
-                if(btn == imageButtons[0]){
-                    intent = Intent(this, QuizActivity::class.java)
-                }
-                else if(btn == imageButtons[1]){
-                    intent = Intent(this, FlashCardActivity::class.java)
-                }
-                else if(btn == imageButtons[2]){
-                    intent = Intent(this, ProgressActivity::class.java)
-                }
-                else{
-                    intent = Intent(this, ResourcesActivity::class.java)
-                }
-                startActivity(intent)
-            }
-        }
-    }
     /*
         Schedule Notifications for 12pm daily
     */
