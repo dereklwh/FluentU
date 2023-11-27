@@ -4,10 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-
-
-    >
+    android:orientation="horizontal">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -200,9 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:text="Remove Photo"
+                    android:text="@string/closeButtonString"
                     android:textColor="#00796B" />
-                <!--android:text="@string/closeButtonString" -->
             </LinearLayout>
 
         </LinearLayout>

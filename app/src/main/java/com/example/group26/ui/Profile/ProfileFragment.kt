@@ -66,17 +66,10 @@ class ProfileFragment : Fragment() {
             showImageSourceDialog()
         }
 
-
         val closeButton = binding.closeButton
         closeButton.setOnClickListener {
-            flag = false
-            val prefsEditor = prefs.edit()
-            prefsEditor.putBoolean(FLAG_KEY, flag)
-            prefsEditor.apply()
-            Toast.makeText(requireContext(), "Photo removed", Toast.LENGTH_SHORT).show()
             requireActivity().supportFragmentManager.popBackStack()
         }
-
 
         val saveButton = binding.saveButton
         saveButton.setOnClickListener {
@@ -87,7 +80,6 @@ class ProfileFragment : Fragment() {
             }
 
             saveProfileData(profileViewModel)
-            requireActivity().supportFragmentManager.popBackStack()
         }
         cameraResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
