@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,8 @@ class ProfileFragment : Fragment() {
     private val FLAG_KEY = "flag"
     private var flag = false
 
+    private var selectedPhotoUri: Uri? = null
+
 
 
     override fun onCreateView(
@@ -57,9 +60,7 @@ class ProfileFragment : Fragment() {
 
         val changePhotoButton = binding.ChangePhotoButton
         changePhotoButton.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri)
-            cameraResult.launch(intent)
+            showImageSourceDialog()
         }
 
 
@@ -74,9 +75,14 @@ class ProfileFragment : Fragment() {
         }
 
 
-
         val saveButton = binding.saveButton
         saveButton.setOnClickListener {
+
+            if (selectedPhotoUri != null) {
+                val bitmap = Util.getBitmap(this, selectedPhotoUri!!)
+                myViewModel.userImage.value = bitmap
+            }
+
             saveProfileData(profileViewModel)
             requireActivity().supportFragmentManager.popBackStack()
         }
@@ -132,6 +138,33 @@ class ProfileFragment : Fragment() {
         prefsEditor.putBoolean(FLAG_KEY, flag)
         prefsEditor.apply()
         Toast.makeText(requireContext(), "Profile saved", Toast.LENGTH_SHORT).show()
+    }
+    
+    // added getContent, showImageSourceDialog, onCameraSelected, onGallerySelected
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            uri: Uri? -> Log.d("UserProfile", "Gallery selected")
+        if (uri != null) {
+            selectedPhotoUri = uri
+            val bitmap = Util.getBitmap(this, uri)
+            myViewModel.userImage.value = bitmap
+        }
+    }
+
+    private fun showImageSourceDialog() {
+        val dialogFragment = ImageSourceDialog(this)
+        dialogFragment.show(requireActivity().supportFragmentManager, "ImageSourceDialog")
+    }
+
+    fun onCameraSelected() {
+        if (tempImgUri != null && cameraResult != null) {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri)
+            cameraResult.launch(intent)
+        }
+    }
+
+    fun onGallerySelected() {
+        getContent.launch("image/*")
     }
     override fun onDestroyView() {
         super.onDestroyView()
