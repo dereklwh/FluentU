@@ -4,11 +4,13 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -18,6 +20,7 @@ import com.example.group26.viewmodels.FlashCardViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 class FlashCardActivity: AppCompatActivity() {
@@ -25,6 +28,10 @@ class FlashCardActivity: AppCompatActivity() {
     private lateinit var viewModel: FlashCardViewModel
     private lateinit var translator:Translator
     private lateinit var language:String
+
+    private lateinit var textToSpeech: TextToSpeech
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flashcards)
@@ -56,12 +63,12 @@ class FlashCardActivity: AppCompatActivity() {
             val inputString = editText.text.toString()
             if(inputString != ""){
                 CoroutineScope(Dispatchers.Main).launch {
-                        val entry = FlashcardEntry(
-                            englishPhrase = inputString,
-                            frenchPhrase = translator.translateText(inputString, "fr"),
-                            spanishPhrase = translator.translateText(inputString, "es"),
-                            chinesePhrase = translator.translateText(inputString, "zh-CN")
-                        )
+                    val entry = FlashcardEntry(
+                        englishPhrase = inputString,
+                        frenchPhrase = translator.translateText(inputString, "fr"),
+                        spanishPhrase = translator.translateText(inputString, "es"),
+                        chinesePhrase = translator.translateText(inputString, "zh-CN")
+                    )
                     viewModel.insertFlashCard(entry)
                 }
             }
@@ -119,6 +126,20 @@ class FlashCardActivity: AppCompatActivity() {
 
         flashcardsContainer.addView(flashCard)
 
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val locale = when (language) {
+                    "fr" -> Locale.FRENCH
+                    "es" -> Locale("es", "ES")
+                    "zh-CN" -> Locale.CHINESE
+                    else -> Locale.getDefault()
+                }
+
+                // set the language and accent
+                textToSpeech.language = locale
+            }
+        }
+
         //animation from chatgpt
         flashCard.setOnClickListener {
             flashCard.animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).withEndAction {
@@ -130,6 +151,7 @@ class FlashCardActivity: AppCompatActivity() {
                 }
                 else{
                     flashCardWord.text = word.frenchPhrase
+                    textToSpeech.speak(flashCardWord.text.toString().trim(), TextToSpeech.QUEUE_FLUSH, null, null)
                 }
             }
             else if(language == "es"){
@@ -138,6 +160,7 @@ class FlashCardActivity: AppCompatActivity() {
                 }
                 else{
                     flashCardWord.text = word.spanishPhrase
+                    textToSpeech.speak(flashCardWord.text.toString().trim(), TextToSpeech.QUEUE_FLUSH, null, null)
                 }
             }
             else if(language == "zh-CN"){
@@ -146,6 +169,7 @@ class FlashCardActivity: AppCompatActivity() {
                 }
                 else{
                     flashCardWord.text = word.chinesePhrase
+                    textToSpeech.speak(flashCardWord.text.toString().trim(), TextToSpeech.QUEUE_FLUSH, null, null)
                 }
             }
         }
