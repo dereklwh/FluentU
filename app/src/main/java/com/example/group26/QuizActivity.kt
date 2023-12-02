@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -38,7 +39,7 @@ class QuizActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         submitButton = findViewById(R.id.submitButton)
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         language = sharedPreferences.getString("language_preference", "en") ?: "en"
@@ -155,6 +156,16 @@ class QuizActivity : AppCompatActivity() {
             "Advanced" -> 2
             else -> 0
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return true
     }
 }
 

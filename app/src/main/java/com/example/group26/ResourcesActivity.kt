@@ -1,6 +1,7 @@
 package com.example.group26
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -20,12 +21,7 @@ class ResourcesActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resources)
-
-        resourceButton = findViewById(R.id.resource_Button)
-        resourceButton.setOnClickListener{
-            finish()
-        }
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         resourcesTitle = findViewById(R.id.appName)
         etcTitle = findViewById(R.id.etcTitle)
         aboutTitle = findViewById(R.id.aboutTitle)
@@ -59,5 +55,15 @@ class ResourcesActivity:AppCompatActivity() {
                 aboutContent.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return true
     }
 }
