@@ -38,7 +38,6 @@ object Util {
     fun getBitmap(fragment: ProfileFragment, imgUri: Uri): Bitmap {
         var bitmap = BitmapFactory.decodeStream(fragment.requireContext().contentResolver.openInputStream(imgUri))
         val matrix = Matrix()
-        matrix.setRotate(90f)
         var ret = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         return ret
     }
