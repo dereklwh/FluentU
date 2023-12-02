@@ -31,7 +31,8 @@ class QuizActivity : AppCompatActivity() {
     private val translator = Translator("AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A")
     private val originalToTranslatedMap = mutableMapOf<String, String>() //keep track of translations
     private var currentQuizzes: List<QuizData> = emptyList()
-    private lateinit var language:String
+    private lateinit var language: String
+    private lateinit var proficiencyLevel: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -41,14 +42,20 @@ class QuizActivity : AppCompatActivity() {
         submitButton = findViewById(R.id.submitButton)
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         language = sharedPreferences.getString("language_preference", "en") ?: "en"
+        proficiencyLevel = sharedPreferences.getString("proficiency_level", "beginner") ?: "beginner"
+        val difficulty = getDifficultyLevel(proficiencyLevel)
+
+        //set UI based on proficiency
+        val quizTitleTextView = findViewById<TextView>(R.id.quiz_id)
+        quizTitleTextView.text = getFormattedQuizTitle(proficiencyLevel)
 
         // Initialize the ViewModel
         val factory = QuizViewModelFactory(this.application)
         viewModel = ViewModelProvider(this, factory).get(QuizViewModel::class.java)
 
-        setupObservers()
+        setupObservers(difficulty)
 
-        //TODO: RETRIEVE QUIZ SCORE AND STORE IN DATABASE
+        //TODO: RETRIEVE QUIZ SCORE AND STORE IN DATABASE FOR VISUALIZATION
         submitButton.setOnClickListener{
             Log.d("QUIZ_SUBMIT", "Submit button clicked")
             val score = computeScore()
@@ -56,8 +63,8 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupObservers() {
-        viewModel.getRandomQuizzes().observe(this, { quizzes ->
+    private fun setupObservers(difficulty: Int) {
+        viewModel.getRandomQuizzes(difficulty).observe(this, { quizzes ->
             currentQuizzes = quizzes // Update the current quizzes
             // Update the UI with the quizzes
             quizzes.forEachIndexed { index, quiz ->
@@ -130,6 +137,24 @@ class QuizActivity : AppCompatActivity() {
 
         Toast.makeText(this, "Your score: $score / $totalQuestions", Toast.LENGTH_LONG).show()
         return score
+    }
+
+    private fun getFormattedQuizTitle(proficiencyLevel: String): String {
+        return when (proficiencyLevel) {
+            "Beginner" -> getString(R.string.quiz_title_beginner)
+            "Intermediate" -> getString(R.string.quiz_title_intermediate)
+            "Advanced" -> getString(R.string.quiz_title_advanced)
+            else -> getString(R.string.quiz_title_beginner)
+        }
+    }
+
+    private fun getDifficultyLevel(proficiencyLevel: String): Int {
+         return when (proficiencyLevel) {
+            "Beginner" -> 0
+            "Intermediate" -> 1
+            "Advanced" -> 2
+            else -> 0
+        }
     }
 }
 

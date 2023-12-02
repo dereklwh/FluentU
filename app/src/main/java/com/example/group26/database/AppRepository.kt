@@ -13,8 +13,8 @@ class AppRepository(
         quizDao.insert(quizData)
     }
 
-    fun getRandomQuizzes(): List<QuizData> {
-        return quizDao.getRandomQuizzes()
+    fun getRandomQuizzes(difficulty: Int): List<QuizData> {
+        return quizDao.getRandomQuizzes(difficulty)
     }
 
 

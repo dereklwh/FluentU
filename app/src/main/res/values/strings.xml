@@ -52,4 +52,9 @@
     <string name="etcText">*DISCLAIMER* The app is under development not all have been implemented</string>
     <string name="resourceReturnBtn">return</string>
     <string name="resourcesTitleText">Resources</string>
+
+    <!-- format quiz title -->
+    <string name="quiz_title_beginner">Quiz - Beginner Level</string>
+    <string name="quiz_title_intermediate">Quiz - Intermediate Level</string>
+    <string name="quiz_title_advanced">Quiz - Advanced Level</string>
 </resources>

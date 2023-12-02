@@ -20,10 +20,10 @@ class QuizViewModel(application: Application, private val repository: AppReposit
         repository.insert(quizData)
     }
 
-    fun getRandomQuizzes(): LiveData<List<QuizData>> {
+    fun getRandomQuizzes(difficulty: Int): LiveData<List<QuizData>> {
         val randomQuizzes = MutableLiveData<List<QuizData>>()
         viewModelScope.launch(Dispatchers.IO) {
-            randomQuizzes.postValue(repository.getRandomQuizzes())
+            randomQuizzes.postValue(repository.getRandomQuizzes(difficulty))
         }
         return randomQuizzes
     }

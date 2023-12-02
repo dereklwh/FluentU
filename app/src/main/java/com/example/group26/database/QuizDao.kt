@@ -17,8 +17,8 @@ interface QuizDao {
     @Query("SELECT * FROM quiz_table")
     fun getAllQuizzes(): LiveData<List<QuizData>>
 
-    @Query("SELECT * FROM quiz_table ORDER BY RANDOM() LIMIT 5")
-    fun getRandomQuizzes(): List<QuizData>
+    @Query("SELECT * FROM quiz_table WHERE difficulty = :difficulty ORDER BY RANDOM() LIMIT 5")
+    fun getRandomQuizzes(difficulty: Int): List<QuizData>
 
     //TODO: add other operations
 }
