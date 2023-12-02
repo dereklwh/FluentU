@@ -17,18 +17,15 @@
             android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:text="@string/homeTitleText"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/bookIcon"
             android:layout_width="157dp"
             android:layout_height="169dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_book" />
+            android:src="@drawable/logo_icon_upscaled" />
 
     </LinearLayout>
 
@@ -41,11 +38,10 @@
             android:id="@+id/ActivitiesSectionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:text="@string/activitiesSectionText"
-            android:textSize="25sp"
-            android:textColor="#000000"
-            android:layout_marginTop="10dp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,8 +60,9 @@
                 android:id="@+id/quizButton"
                 android:layout_width="86dp"
                 android:layout_height="72dp"
-                android:src="@drawable/ic_quiz"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_button_background"
+                android:src="@drawable/quiz_icon" />
 
             <TextView
                 android:id="@+id/quizButtonText"
@@ -85,8 +82,9 @@
                 android:id="@+id/flashCardButton"
                 android:layout_width="86dp"
                 android:layout_height="72dp"
-                android:src="@drawable/ic_flashcard"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_button_background"
+                android:src="@drawable/flashcards_icon" />
 
             <TextView
                 android:id="@+id/flashCardButtonText"
@@ -106,8 +104,9 @@
                 android:id="@+id/progressButton"
                 android:layout_width="86dp"
                 android:layout_height="72dp"
-                android:src="@drawable/ic_progress"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_button_background"
+                android:src="@drawable/progress_icon" />
 
             <TextView
                 android:id="@+id/progresButtonText"
@@ -127,8 +126,9 @@
                 android:id="@+id/resourcesButton"
                 android:layout_width="86dp"
                 android:layout_height="72dp"
-                android:src="@drawable/ic_resource"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_button_background"
+                android:src="@drawable/resource_icon" />
 
             <TextView
                 android:id="@+id/resourcesButtonText"
@@ -152,7 +152,6 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:text="@string/dailyTipsSectionText"
-            android:textColor="#000000"
             android:textSize="25sp" />
 
     </LinearLayout>
@@ -175,8 +174,7 @@
                 android:background="@drawable/daily_tip_border"
                 android:padding="7dp"
                 android:text="@string/dailyTipText"
-                android:textColor="#000000"
-                android:textSize="25sp" />
+                android:textSize="24sp" />
 
         </ScrollView>
 

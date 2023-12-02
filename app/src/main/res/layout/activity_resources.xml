@@ -20,13 +20,12 @@
             android:layout_marginTop="25dp"
             android:text="@string/resourcesTitleText"
             android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="#000000" />
+            android:background="@color/custom_color_2" />
 
     </LinearLayout>
 
@@ -51,12 +50,11 @@
             android:layout_marginTop="25dp"
             android:text="@string/aboutTitleString"
             android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textSize="30sp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="#000000" />
+            android:background="@color/custom_color_2" />
     </LinearLayout>
 
     <TextView
@@ -86,13 +84,12 @@
             android:layout_marginTop="25dp"
             android:text="@string/etcTitleString"
             android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="#000000" />
+            android:background="@color/custom_color_2" />
 
     </LinearLayout>
 
