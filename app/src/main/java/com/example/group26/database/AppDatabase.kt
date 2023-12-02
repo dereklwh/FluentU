@@ -182,9 +182,9 @@ abstract class AppDatabase : RoomDatabase() {
 
             db.quizDao().insertAll(quizDataList)
 
-            Log.d("TAG", "ye")
-
             val translator = Translator("AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A")
+            val allEntries = mutableListOf<FlashcardEntry>()
+
             val foods: ArrayList<String> = ArrayList(
                 listOf(
                     "Pizza",
@@ -246,53 +246,51 @@ abstract class AppDatabase : RoomDatabase() {
             )
 
             for (food in foods) {
-                withContext(Dispatchers.IO) {
-                    val entry = FlashcardEntry(
-                        englishPhrase = food,
-                        frenchPhrase = translator.translateText(food, "fr"),
-                        spanishPhrase = translator.translateText(food, "es"),
-                        chinesePhrase = translator.translateText(food, "zh-CN"),
-                        deckName = "Foods"
-                    )
-                    db.flashcardDao().insert(entry)
-                }
+                val entry = FlashcardEntry(
+                    englishPhrase = food,
+                    frenchPhrase = translator.translateText(food, "fr"),
+                    spanishPhrase = translator.translateText(food, "es"),
+                    chinesePhrase = translator.translateText(food, "zh-CN"),
+                    deckName = "Foods"
+                )
+                allEntries.add(entry)
             }
 
             for (sport in sports) {
-                withContext(Dispatchers.IO) {
-                    val entry = FlashcardEntry(
-                        englishPhrase = sport,
-                        frenchPhrase = translator.translateText(sport, "fr"),
-                        spanishPhrase = translator.translateText(sport, "es"),
-                        chinesePhrase = translator.translateText(sport, "zh-CN"),
-                        deckName = "Sports"
-                    )
-                    db.flashcardDao().insert(entry)
-                }
+                val entry = FlashcardEntry(
+                    englishPhrase = sport,
+                    frenchPhrase = translator.translateText(sport, "fr"),
+                    spanishPhrase = translator.translateText(sport, "es"),
+                    chinesePhrase = translator.translateText(sport, "zh-CN"),
+                    deckName = "Sports"
+                )
+                allEntries.add(entry)
             }
 
             for (adjective in adjectives) {
-                withContext(Dispatchers.IO) {
-                    val entry = FlashcardEntry(
-                        englishPhrase = adjective,
-                        frenchPhrase = translator.translateText(adjective, "fr"),
-                        spanishPhrase = translator.translateText(adjective, "es"),
-                        chinesePhrase = translator.translateText(adjective, "zh-CN"),
-                        deckName = "Adjectives"
-                    )
-                    db.flashcardDao().insert(entry)
-                }
+                val entry = FlashcardEntry(
+                    englishPhrase = adjective,
+                    frenchPhrase = translator.translateText(adjective, "fr"),
+                    spanishPhrase = translator.translateText(adjective, "es"),
+                    chinesePhrase = translator.translateText(adjective, "zh-CN"),
+                    deckName = "Adjectives"
+                )
+                allEntries.add(entry)
             }
 
             for (action in actions) {
-                withContext(Dispatchers.IO) {
-                    val entry = FlashcardEntry(
-                        englishPhrase = action,
-                        frenchPhrase = translator.translateText(action, "fr"),
-                        spanishPhrase = translator.translateText(action, "es"),
-                        chinesePhrase = translator.translateText(action, "zh-CN"),
-                        deckName = "actions"
-                    )
+                val entry = FlashcardEntry(
+                    englishPhrase = action,
+                    frenchPhrase = translator.translateText(action, "fr"),
+                    spanishPhrase = translator.translateText(action, "es"),
+                    chinesePhrase = translator.translateText(action, "zh-CN"),
+                    deckName = "actions"
+                )
+                allEntries.add(entry)
+            }
+
+            withContext(Dispatchers.IO) {
+                for(entry in allEntries){
                     db.flashcardDao().insert(entry)
                 }
             }
