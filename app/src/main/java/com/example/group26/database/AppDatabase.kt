@@ -11,6 +11,7 @@ import com.example.group26.Translator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Database(entities = [QuizData::class, FlashcardEntry::class, ProgressData::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -181,6 +182,8 @@ abstract class AppDatabase : RoomDatabase() {
 
             db.quizDao().insertAll(quizDataList)
 
+            Log.d("TAG", "ye")
+
             val translator = Translator("AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A")
             val foods: ArrayList<String> = ArrayList(
                 listOf(
@@ -242,8 +245,8 @@ abstract class AppDatabase : RoomDatabase() {
                 )
             )
 
-            for(food in foods){
-                CoroutineScope(Dispatchers.Main).launch {
+            for (food in foods) {
+                withContext(Dispatchers.IO) {
                     val entry = FlashcardEntry(
                         englishPhrase = food,
                         frenchPhrase = translator.translateText(food, "fr"),
@@ -255,8 +258,8 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
 
-            for(sport in sports){
-                CoroutineScope(Dispatchers.Main).launch {
+            for (sport in sports) {
+                withContext(Dispatchers.IO) {
                     val entry = FlashcardEntry(
                         englishPhrase = sport,
                         frenchPhrase = translator.translateText(sport, "fr"),
@@ -268,8 +271,8 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
 
-            for(adjective in adjectives){
-                CoroutineScope(Dispatchers.Main).launch {
+            for (adjective in adjectives) {
+                withContext(Dispatchers.IO) {
                     val entry = FlashcardEntry(
                         englishPhrase = adjective,
                         frenchPhrase = translator.translateText(adjective, "fr"),
@@ -281,14 +284,14 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
 
-            for(action in actions){
-                CoroutineScope(Dispatchers.Main).launch {
+            for (action in actions) {
+                withContext(Dispatchers.IO) {
                     val entry = FlashcardEntry(
                         englishPhrase = action,
                         frenchPhrase = translator.translateText(action, "fr"),
                         spanishPhrase = translator.translateText(action, "es"),
                         chinesePhrase = translator.translateText(action, "zh-CN"),
-                        deckName = "Actions"
+                        deckName = "actions"
                     )
                     db.flashcardDao().insert(entry)
                 }
