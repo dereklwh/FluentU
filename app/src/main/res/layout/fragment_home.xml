@@ -172,9 +172,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/daily_tip_border"
-                android:padding="7dp"
+                android:gravity="center"
                 android:text="@string/dailyTipText"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
         </ScrollView>
 
