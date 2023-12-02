@@ -2,6 +2,7 @@ package com.example.group26
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -136,6 +137,10 @@ class QuizActivity : AppCompatActivity() {
             }
         }
 
+        if (score == totalQuestions && totalQuestions == 5) {
+            playSuccessSound()
+        }
+
         Toast.makeText(this, "Your score: $score / $totalQuestions", Toast.LENGTH_LONG).show()
         return score
     }
@@ -166,6 +171,13 @@ class QuizActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    //TODO: Perfect score sound
+    private fun playSuccessSound() {
+        val mediaPlayer = MediaPlayer.create(this, R.raw.yay)
+        mediaPlayer.setOnCompletionListener { mp -> mp.release() }
+        mediaPlayer.start()
     }
 }
 
