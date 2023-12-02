@@ -6,6 +6,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -13,9 +14,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.example.group26.databinding.ActivityMainBinding
+import com.example.group26.ui.home.DailyTipWorker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
+
 
 
 private const val PREFERENCES_NOTIFICATION_KEY = "push_notification"
@@ -23,6 +29,7 @@ private const val PREFERENCES_NOTIFICATION_KEY = "push_notification"
 class MainActivity : AppCompatActivity() {
     private lateinit var imageButtons: Array<ImageButton>
     private lateinit var binding: ActivityMainBinding
+
 
     private val api: String = "AIzaSyC0LA82UScnqYhuh-e_urF_aH7h_CZ-y7A"
 
@@ -33,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         scheduleNotifications()
+        scheduleDailyTip()
+        displayTip()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -44,6 +53,26 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    // Retrieve tip from Shared Preferences and display in textview
+    private fun displayTip() {
+        val sharedPreferences = applicationContext.getSharedPreferences(
+            "DailyTipPrefs",
+            Context.MODE_PRIVATE
+        )
+        val storedTip = sharedPreferences.getString("daily_tip", getString(R.string.dailyTipText))
+        val tipTextView: TextView = findViewById(R.id.dailyTipText)
+        tipTextView.text = storedTip
+    }
+
+    //A PeriodicWorkRequest to generate a new tip every day.
+    private fun scheduleDailyTip() {
+        val dailyWorkRequest = PeriodicWorkRequest.Builder(
+            DailyTipWorker::class.java,
+            1, TimeUnit.DAYS
+        ).build()
+        WorkManager.getInstance(this).enqueue(dailyWorkRequest)
     }
 
     /*

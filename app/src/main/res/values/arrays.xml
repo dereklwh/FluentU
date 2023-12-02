@@ -24,4 +24,54 @@
         <item>Intermediate</item>
         <item>Advanced</item>
     </string-array>
+    <string-array name="language_tips">
+        <item>
+            Immerse yourself in English media such as movies, TV shows, podcasts, and books.
+            This not only exposes you to authentic language use but also helps improve your
+            listening skills, pronunciation, and overall comprehension.
+        </item>
+        <item>
+            When using quizzes for language learning, vary question types to cover multiple skills.
+            Review both correct and incorrect answers to reinforce learning. Create quizzes at
+            different difficulty levels for continuous challenge and growth.
+        </item>
+        <item>
+            When using flashcards for language learning, strive for active engagement rather than
+            passive memorization. Review regularly and focus on the words or phrases that prove more
+            challenging,ensuring a comprehensive grasp of the language.
+        </item>
+        <item>
+            Don\'t forget to track your progress today! Check out our Progress section to see how
+            far you\'ve come in your language learning journey. It\'s a great way to stay motivated
+            and celebrate your achievements!
+        </item>
+        <item>
+            Expand your learning horizons today! Visit our resource page for more information about
+            our app. FluentU is a treasure trove waiting to enhance your language learning journey!
+        </item>
+        <item>
+            Define achievable language learning goals by specifying weekly targets for learning new words and
+            practicing specific conversation topics. Ensure these goals are realistic and trackable,
+            and adapt them as you progress in your language learning journey.
+        </item>
+        <item>
+            When using flashcards, tap to translate the text and use the text-to-speech feature for
+            active listening. Enhance your pronunciation and comprehension by hearing the words aloud
+        </item>
+        <item>
+            Consistent daily practice across speaking, listening, reading, and writing is crucial
+            for language improvement. Allocate a short time each day to work on these key skills
+            in your target language.
+        </item>
+        <item>
+            Personalize your profile with accurate details and a clear picture to enhance your user
+            experience. Providing genuine information helps create a more engaging and tailored
+            experience within the app.
+        </item>
+        <item>
+            Embrace the learning process—mistakes are milestones on your language journey.
+            Stay patient and persistent in your pursuit of fluency.
+        </item>
+        <!-- Add more tips as needed -->
+    </string-array>
 </resources>
