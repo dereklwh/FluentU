@@ -9,5 +9,6 @@ data class FlashcardEntry(
     val englishPhrase: String,
     val frenchPhrase: String,
     val spanishPhrase: String,
-    val chinesePhrase: String
+    val chinesePhrase: String,
+    val deckName: String
     )

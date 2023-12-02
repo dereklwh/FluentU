@@ -18,5 +18,8 @@ interface FlashcardDao {
     @Delete
     fun deleteFlashCard(flashcardEntry:FlashcardEntry)
 
+    @Query("DELETE FROM flashcard_table WHERE deckName = :deckName")
+    fun deleteDeck(deckName:String)
+
     //TODO: add other operations
 }

@@ -39,6 +39,12 @@
         </activity>
 
         <activity
+            android:name=".FlashCardDeckActivity"
+            android:exported="true"
+            android:label="Flashcard Decks">
+        </activity>
+
+        <activity
             android:name=".ProgressActivity"
             android:exported="true"
             android:label="@string/progressActivityLabel">

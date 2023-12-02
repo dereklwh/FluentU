@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.group26.FlashCardActivity
+import com.example.group26.FlashCardDeckActivity
 import com.example.group26.ProgressActivity
 import com.example.group26.QuizActivity
 import com.example.group26.R
@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
                     intent = Intent(requireContext(), QuizActivity::class.java)
                 }
                 else if(btn == imageButtons[1]){
-                    intent = Intent(requireContext(), FlashCardActivity::class.java)
+                    intent = Intent(requireContext(), FlashCardDeckActivity::class.java)
                 }
                 else if(btn == imageButtons[2]){
                     intent = Intent(requireContext(), ProgressActivity::class.java)

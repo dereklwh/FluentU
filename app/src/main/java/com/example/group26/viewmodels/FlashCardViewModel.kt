@@ -21,6 +21,12 @@ class FlashCardViewModel(application: Application, private val repository: AppRe
     fun deleteFlashCard(FlashCardEntry: FlashcardEntry) =viewModelScope.launch(Dispatchers.IO){
         repository.delete(FlashCardEntry)
     }
+
+    fun deleteDeck(deckName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteDeck(deckName)
+        }
+    }
 }
 
 class FlashCardViewModelFactory(private val application: Application) : ViewModelProvider.Factory {

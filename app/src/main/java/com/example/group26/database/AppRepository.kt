@@ -26,6 +26,9 @@ class AppRepository(
     fun delete(flashcardEntry: FlashcardEntry){
         flashcardDao.deleteFlashCard(flashcardEntry)
     }
+    fun deleteDeck(deckName: String) {
+        flashcardDao.deleteDeck(deckName)
+    }
 
 
     // For ProgressTracker

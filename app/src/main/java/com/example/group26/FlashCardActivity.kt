@@ -6,11 +6,12 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -28,21 +29,28 @@ class FlashCardActivity: AppCompatActivity() {
     private lateinit var viewModel: FlashCardViewModel
     private lateinit var translator:Translator
     private lateinit var language:String
-
     private lateinit var textToSpeech: TextToSpeech
+    private var deckName = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flashcards)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val factory = FlashCardViewModelFactory(this.application)
         viewModel = ViewModelProvider(this, factory).get(FlashCardViewModel::class.java)
         translator = Translator(api)
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         language = sharedPreferences.getString("language_preference", "en") ?: "en"
+        deckName = intent.getStringExtra("deckName").toString()
         setupAddFlashCardButton()
         setupObservers()
         loadFlashCards()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.flashcard_delete, menu)
+        return true
     }
 
     private fun loadFlashCards()
@@ -52,7 +60,9 @@ class FlashCardActivity: AppCompatActivity() {
         val flashcards: List<FlashcardEntry>? = viewModel.allFlashCards.value
         flashcards?.let { list ->
             for (flashcard in list) {
-                addFlashcard(flashcard)
+                if(flashcard.englishPhrase != "" && flashcard.deckName == deckName){
+                    addFlashcard(flashcard)
+                }
             }
         }
     }
@@ -67,7 +77,8 @@ class FlashCardActivity: AppCompatActivity() {
                         englishPhrase = inputString,
                         frenchPhrase = translator.translateText(inputString, "fr"),
                         spanishPhrase = translator.translateText(inputString, "es"),
-                        chinesePhrase = translator.translateText(inputString, "zh-CN")
+                        chinesePhrase = translator.translateText(inputString, "zh-CN"),
+                        deckName = deckName
                     )
                     viewModel.insertFlashCard(entry)
                 }
@@ -86,7 +97,6 @@ class FlashCardActivity: AppCompatActivity() {
 
     private fun addFlashcard(word:FlashcardEntry) {
         val flashcardsContainer: LinearLayout = findViewById(R.id.flashcardsContainer)
-
         val flashCard = LinearLayout(this)
         flashCard.orientation = LinearLayout.VERTICAL
         flashCard.setBackgroundResource(R.drawable.flashcard_border)
@@ -173,5 +183,20 @@ class FlashCardActivity: AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            R.id.action_delete -> {
+                viewModel.deleteDeck(deckName)
+                finish()
+                return true
+            }
+        }
+        return true
     }
 }
