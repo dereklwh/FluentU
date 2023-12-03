@@ -110,6 +110,7 @@ class FlashCardActivity: AppCompatActivity() {
 
         val deleteButton = Button(this)
         deleteButton.text = "X"
+        deleteButton.setTextColor(resources.getColor(R.color.black))
         deleteButton.setBackgroundColor(Color.TRANSPARENT)
         deleteButton.setOnClickListener {
             flashcardsContainer.removeView(flashCard)
