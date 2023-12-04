@@ -40,6 +40,12 @@ class ProgressActivity : AppCompatActivity() {
             val xAxis: XAxis = barChart.xAxis
             xAxis.setGranularity(1f) 
             xAxis.valueFormatter = IntAxisValueFormatter() 
+	    
+	    // change the y-axis to show integers and hide the right y-axis
+            val yAxis: YAxis = barChart.axisLeft
+            yAxis.granularity = 1.0f
+            yAxis.axisMinimum = 0f
+            barChart.axisRight.isEnabled = false
 
             barChart.setDrawValueAboveBar(true)
             barChart.description.isEnabled = false
