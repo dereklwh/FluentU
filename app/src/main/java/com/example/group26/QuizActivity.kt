@@ -26,6 +26,9 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class QuizActivity : AppCompatActivity() {
 
@@ -63,6 +66,15 @@ class QuizActivity : AppCompatActivity() {
             Log.d("QUIZ_SUBMIT", "Submit button clicked")
             val score = computeScore()
             val progressData = ProgressData(0L,0L,0L,score,1,"",0.0)
+
+            val submissionPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+            val editor = submissionPreferences.edit()
+
+            // store the submission date
+            val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            editor.putString("last_submission_date", currentDate)
+            editor.apply()
+
             val progressDao = AppDatabase.getDatabase(applicationContext).progressTrackerDao()
             CoroutineScope(Dispatchers.IO).launch {
                 progressDao.insert(progressData)
@@ -186,4 +198,3 @@ class QuizActivity : AppCompatActivity() {
         mediaPlayer.start()
     }
 }
-
