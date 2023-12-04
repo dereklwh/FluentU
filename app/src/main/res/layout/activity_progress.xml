@@ -46,11 +46,10 @@
         android:layout_height="201dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="233dp"
-            android:layout_height="201dp"
-            android:src="@drawable/ic_progress" />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

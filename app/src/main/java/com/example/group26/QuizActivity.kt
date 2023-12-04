@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.group26.database.AppDatabase
+import com.example.group26.database.ProgressData
 import com.example.group26.database.QuizData
 import com.example.group26.viewmodels.QuizViewModel
 import com.example.group26.viewmodels.QuizViewModelFactory
@@ -57,10 +58,15 @@ class QuizActivity : AppCompatActivity() {
 
         setupObservers(difficulty)
 
-        //TODO: RETRIEVE QUIZ SCORE AND STORE IN DATABASE FOR VISUALIZATION
+        // RETRIEVE QUIZ SCORE AND STORE IN DATABASE FOR VISUALIZATION
         submitButton.setOnClickListener{
             Log.d("QUIZ_SUBMIT", "Submit button clicked")
             val score = computeScore()
+            val progressData = ProgressData(0L,0L,0L,score,1,"",0.0)
+            val progressDao = AppDatabase.getDatabase(applicationContext).progressTrackerDao()
+            CoroutineScope(Dispatchers.IO).launch {
+                progressDao.insert(progressData)
+            }
             finish()
         }
     }
