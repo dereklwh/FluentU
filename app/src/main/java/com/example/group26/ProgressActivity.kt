@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.example.group26.database.AppDatabase
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -38,12 +39,12 @@ class ProgressActivity : AppCompatActivity() {
 
             // change the x-axis to show integers
             val xAxis: XAxis = barChart.xAxis
-            xAxis.setGranularity(1f) 
+            xAxis.granularity = 1f 
             xAxis.valueFormatter = IntAxisValueFormatter() 
 	    
 	    // change the y-axis to show integers and hide the right y-axis
             val yAxis: YAxis = barChart.axisLeft
-            yAxis.granularity = 1.0f
+            yAxis.granularity = 1f
             yAxis.axisMinimum = 0f
             barChart.axisRight.isEnabled = false
 
